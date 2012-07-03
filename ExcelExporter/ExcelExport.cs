@@ -59,7 +59,6 @@ namespace ExcelExporter {
 		///<summary>Gets the file extension for a database format.</summary>
 		public static string GetExtension(ExcelFormat format) { return FormatExtensions.First(kvp => kvp.Key == format).Value; }
 
-		static string GetConnectionString(string filePath) { return GetConnectionString(filePath, GetDBType(Path.GetExtension(filePath))); }
 		static string GetConnectionString(string filePath, ExcelFormat format) {
 			if (String.IsNullOrEmpty(filePath)) throw new ArgumentNullException("filePath");
 
