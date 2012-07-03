@@ -16,16 +16,24 @@ namespace ExcelExporter {
 		readonly List<IExcelSheet> sheets = new List<IExcelSheet>();
 
 		///<summary>Adds a collection of strongly-typed objects to be exported.</summary>
-		///<param name="name">The name of the sheet to generate.</param>
-		///<param name="items">The rows to export to the sheet.</param>
+		///<param sheetName="sheetName">The sheetName of the sheet to generate.</param>
+		///<param sheetName="items">The rows to export to the sheet.</param>
 		///<returns>This instance, to allow chaining.kds</returns>
-		public ExcelExport AddSheet<TRow>(string name, IEnumerable<TRow> items) {
-			sheets.Add(new TypedSheet<TRow>(name, items));
+		public ExcelExport AddSheet<TRow>(string sheetName, IEnumerable<TRow> items) {
+			sheets.Add(new Exporters.TypedSheet<TRow>(sheetName, items));
+			return this;
+		}
+
+		///<summary>Adds the contents of a DataTable instance to be exported, using the table's name as the worksheet name.</summary>
+		public ExcelExport AddSheet(DataTable table) { return AddSheet(table.TableName, table); }
+		///<summary>Adds the contents of a DataTable instance to be exported.</summary>
+		public ExcelExport AddSheet(string sheetName, DataTable table) {
+			sheets.Add(new Exporters.DataTableSheet(sheetName, table));
 			return this;
 		}
 
 		///<summary>Exports all of the added sheets to an Excel file.</summary>
-		///<param name="fileName">The filename to export to.  The file type is inferred from the extension.</param>
+		///<param sheetName="fileName">The filename to export to.  The file type is inferred from the extension.</param>
 		public void ExportTo(string fileName) {
 			ExportTo(fileName, GetDBType(Path.GetExtension(fileName)));
 		}
@@ -102,6 +110,6 @@ namespace ExcelExporter {
 	}
 
 	interface IExcelSheet {
-		void Export(IDbConnection connection);
+		void Export(OleDbConnection connection);
 	}
 }

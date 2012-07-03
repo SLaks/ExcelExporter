@@ -41,10 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exporters\DataTableSheet.cs" />
     <Compile Include="DbExtensions.cs" />
     <Compile Include="ExcelExport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TypedSheet.cs" />
+    <Compile Include="Exporters\SheetBase.cs" />
+    <Compile Include="Exporters\TypedSheet.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
