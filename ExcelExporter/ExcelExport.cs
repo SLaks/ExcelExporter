@@ -6,10 +6,6 @@ using System.Data.Common;
 using System.Data.OleDb;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-using System.Web;
 
 namespace ExcelExporter {
 	///<summary>Exports a collection of tables to an Excel spreadsheet.</summary>
