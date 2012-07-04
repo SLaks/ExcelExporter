@@ -29,7 +29,10 @@ namespace ExcelExporter {
 		}
 
 		///<summary>Adds the contents of a DataTable instance to be exported, using the table's name as the worksheet name.</summary>
-		public ExcelExport AddSheet(DataTable table) { return AddSheet(table.TableName, table); }
+		public ExcelExport AddSheet(DataTable table) {
+			if (table == null) throw new ArgumentNullException("table");
+			return AddSheet(table.TableName, table);
+		}
 		///<summary>Adds the contents of a DataTable instance to be exported.</summary>
 		public ExcelExport AddSheet(string sheetName, DataTable table) {
 			Sheets.Add(new Exporters.DataTableSheet(sheetName, table));
