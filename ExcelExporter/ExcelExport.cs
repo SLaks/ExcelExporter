@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Data.Common;
 using System.Data.OleDb;
 using System.IO;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace ExcelExporter {
 		public Collection<IExcelSheet> Sheets { get; private set; }
 
 		///<summary>Adds a collection of strongly-typed objects to be exported.</summary>
-		///<param sheetName="sheetName">The sheetName of the sheet to generate.</param>
+		///<param sheetName="sheetName">The name of the sheet to generate.</param>
 		///<param sheetName="items">The rows to export to the sheet.</param>
 		///<returns>This instance, to allow chaining.kds</returns>
 		public ExcelExport AddSheet<TRow>(string sheetName, IEnumerable<TRow> items) {
@@ -36,6 +37,14 @@ namespace ExcelExporter {
 		///<summary>Adds the contents of a DataTable instance to be exported.</summary>
 		public ExcelExport AddSheet(string sheetName, DataTable table) {
 			Sheets.Add(new Exporters.DataTableSheet(sheetName, table));
+			return this;
+		}
+
+		///<summary>Adds the contents returned by an open DataReader to be exported.</summary>
+		///<param sheetName="sheetName">The name of the sheet to generate.</param>
+		///<pparam name="reader">The reader to read rows from.  This reader must remain open when ExportTo() is called.</pparam>
+		public ExcelExport AddSheet(string sheetName, DbDataReader reader) {
+			Sheets.Add(new Exporters.DataReaderSheet(sheetName, reader));
 			return this;
 		}
 

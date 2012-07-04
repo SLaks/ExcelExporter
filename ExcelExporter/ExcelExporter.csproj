@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exporters\DataReaderSheet.cs" />
     <Compile Include="Exporters\DataTableSheet.cs" />
     <Compile Include="DbExtensions.cs" />
     <Compile Include="ExcelExport.cs" />
