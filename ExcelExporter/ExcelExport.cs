@@ -13,14 +13,18 @@ using System.Web;
 namespace ExcelExporter {
 	///<summary>Exports a collection of tables to an Excel spreadsheet.</summary>
 	public class ExcelExport {
-		readonly List<IExcelSheet> sheets = new List<IExcelSheet>();
+		///<summary>Creates a new ExcelExport instance.</summary>
+		public ExcelExport() { Sheets = new Collection<IExcelSheet>(); }
+
+		///<summary>Gets the sheets which will be exported by this instance.</summary>
+		public Collection<IExcelSheet> Sheets { get; private set; }
 
 		///<summary>Adds a collection of strongly-typed objects to be exported.</summary>
 		///<param sheetName="sheetName">The sheetName of the sheet to generate.</param>
 		///<param sheetName="items">The rows to export to the sheet.</param>
 		///<returns>This instance, to allow chaining.kds</returns>
 		public ExcelExport AddSheet<TRow>(string sheetName, IEnumerable<TRow> items) {
-			sheets.Add(new Exporters.TypedSheet<TRow>(sheetName, items));
+			Sheets.Add(new Exporters.TypedSheet<TRow>(sheetName, items));
 			return this;
 		}
 
@@ -28,7 +32,7 @@ namespace ExcelExporter {
 		public ExcelExport AddSheet(DataTable table) { return AddSheet(table.TableName, table); }
 		///<summary>Adds the contents of a DataTable instance to be exported.</summary>
 		public ExcelExport AddSheet(string sheetName, DataTable table) {
-			sheets.Add(new Exporters.DataTableSheet(sheetName, table));
+			Sheets.Add(new Exporters.DataTableSheet(sheetName, table));
 			return this;
 		}
 
@@ -41,7 +45,7 @@ namespace ExcelExporter {
 		public void ExportTo(string fileName, ExcelFormat format) {
 			using (var connection = new OleDbConnection(GetConnectionString(fileName, format))) {
 				connection.Open();
-				foreach (var sheet in sheets) {
+				foreach (var sheet in Sheets) {
 					sheet.Export(connection);
 				}
 			}
@@ -109,7 +113,11 @@ namespace ExcelExporter {
 		Excel2007Macro
 	}
 
-	interface IExcelSheet {
+	///<summary>Stores a single exportable worksheet.</summary>
+	public interface IExcelSheet {
+		///<summary>Gets the name of the worksheet.</summary>
+		string Name { get; }
+		///<summary>Exports the worksheet to the specified OleDb connection.</summary>
 		void Export(OleDbConnection connection);
 	}
 }
