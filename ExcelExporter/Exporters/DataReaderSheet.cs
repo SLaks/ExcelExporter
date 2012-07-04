@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
 
 namespace ExcelExporter.Exporters {
 	class DataReaderSheet : SheetBase<IDataRecord> {
-		readonly DbDataReader reader;
-		public DataReaderSheet(string name, DbDataReader reader)
+		readonly IDataReader reader;
+		public DataReaderSheet(string name, IDataReader reader)
 			: base(name) {
 			this.reader = reader;
 		}
@@ -20,7 +21,13 @@ namespace ExcelExporter.Exporters {
 		}
 
 		protected override IEnumerable<IDataRecord> GetRows() {
-			return reader.Cast<IDataRecord>();
+			return new DbEnumerable(reader).Cast<IDataRecord>();
+		}
+		class DbEnumerable : IEnumerable {
+			readonly IDataReader reader;
+			public DbEnumerable(IDataReader reader) { this.reader = reader; }
+
+			public IEnumerator GetEnumerator() { return new DbEnumerator(reader, closeReader: true); }
 		}
 
 		protected override IEnumerable<object> GetValues(IDataRecord row) {

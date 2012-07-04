@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Data.Common;
 using System.Data.OleDb;
 using System.IO;
 using System.Linq;
@@ -38,8 +37,8 @@ namespace ExcelExporter {
 
 		///<summary>Adds the contents returned by an open DataReader to be exported.</summary>
 		///<param sheetName="sheetName">The name of the sheet to generate.</param>
-		///<pparam name="reader">The reader to read rows from.  This reader must remain open when ExportTo() is called.</pparam>
-		public ExcelExport AddSheet(string sheetName, DbDataReader reader) {
+		///<pparam name="reader">The reader to read rows from.  This reader must remain open when ExportTo() is called, and will be closed automatically during the export.</pparam>
+		public ExcelExport AddSheet(string sheetName, IDataReader reader) {
 			Sheets.Add(new Exporters.DataReaderSheet(sheetName, reader));
 			return this;
 		}
