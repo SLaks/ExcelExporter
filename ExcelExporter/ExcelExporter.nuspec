@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>SLaks.ExcelExport</id>
+		<version>$version$</version>
+		<title>$title$</title>
+		<authors>$author$</authors>
+		<owners>$author$</owners>
+		<projectUrl>https://github.com/SLaks/ExcelExporter</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>
+			ExcelExport is a simple, fluent API to export data to Excel spreadsheets using OleDb.
+
+			For sample usage, click the Project Information link.
+		</description>
+		<releaseNotes>Initial release.</releaseNotes>
+		<copyright>Copyright © Schabse Laks 2012</copyright>
+		<tags>C# .Net Excel fluent</tags>
+	</metadata>
+</package>
