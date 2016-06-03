@@ -44,4 +44,4 @@ new ExcelExport()
 
 ##License
 
-ExcelExport is Copyright © 2016 by Contributors under the MIT license (https://opensource.org/licenses/MIT).
+ExcelExport is Copyright © 2016 by Slaks under the MIT license (https://opensource.org/licenses/MIT).
