@@ -39,3 +39,9 @@ new ExcelExport()
  - When exporting ADO.Net DataTables, the sheet name is optional; if omitted, the table's `TableName` property will be used instead.
 
  - When exporting ADO.Net DataReaders, the reader must remain open when `ExportTo()` is called.  When the export is finished, the reader will be closed.
+ - 
+ 
+
+##License
+
+ExcelExport is Copyright © 2016 by Contributors under the MIT license (https://opensource.org/licenses/MIT).
